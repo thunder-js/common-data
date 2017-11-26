@@ -42,11 +42,6 @@ const config = {
     ]}
   ]
 },
-"settings": {
-  "import/resolver": {
-    "babel-module": {}
-  }
-},
 "parserOptions":{
   "ecmaFeatures": {
     "experimentalObjectRestSpread": true,
