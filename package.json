@@ -1,6 +1,6 @@
 {
   "name": "common-data",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "./index.js",
   "license": "MIT",
   "scripts": {
@@ -21,13 +21,13 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-stage-0": "^6.24.1",
-    "eslint": "^4.7.0",
+    "eslint": "4.12.0",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jest": "^21.2.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.3.0",
-    "flow-bin": "^0.54.1",
+    "flow-bin": "0.59.0",
     "jest-cli": "^21.1.0",
     "nodemon": "^1.12.0",
     "react": "^16.1.1",
