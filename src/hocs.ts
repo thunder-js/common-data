@@ -1,10 +1,7 @@
-//  @flow
-import * as React from 'react'
-import { branch, mapProps, renderComponent, compose, type HOC } from 'recompose'
-import { graphql, type QueryProps } from 'react-apollo'
-import type { OperationOption } from 'react-apollo'
+import { branch, mapProps, renderComponent, compose } from 'recompose'
+import { graphql } from 'react-apollo'
 
-export type FetchState = {
+export interface IFetchState {
   fetchState: {
     initialLoading: boolean,
     activelyRefetching: boolean,
@@ -12,7 +9,7 @@ export type FetchState = {
     fetchingMore: boolean,
   }
 }
-export type FetchActions = {
+export interface IFetchActions {
   fetchActions: {
     refetch: () => void,
     fetchMore: () => void
@@ -24,22 +21,22 @@ const activelyRefetching = (networkStatus: number): boolean => networkStatus ===
 const passivelyRefetching = (networkStatus: number): boolean => networkStatus === 2 || networkStatus === 6;
 const fetchingMore = (networkStatus: number): boolean => networkStatus === 3;
 
-export const withLoading = <Props: {}>(isLoading: (props: any) => boolean, LoadingComponent: React.ComponentType<Props>): HOC<Props, Props> => branch(
+export const withLoading = (isLoading: (props: any) => boolean, LoadingComponent: any) => branch(
   isLoading,
   renderComponent(LoadingComponent),
 )
 
-export const withPlaceholder = <Props: {}>(isEmpty: (props: any) => boolean, PlaceholderComponent: React.ComponentType<Props>): HOC<Props, Props> => branch(
+export const withPlaceholder = (isEmpty: (props: any) => boolean, PlaceholderComponent: any) => branch(
   isEmpty,
   renderComponent(PlaceholderComponent),
 )
 
-export const withError = <Props: {}>(isError: (props: any) => boolean, ErrorComponent: React.ComponentType<Props>): HOC<Props, Props> => branch(
+export const withError = (isError: (props: any) => boolean, ErrorComponent: any) => branch(
   isError,
   renderComponent(ErrorComponent),
 )
 
-export const withApolloFetchState = <Props: {}>():HOC<Props, FetchState & Props> => mapProps(props => ({
+export const withApolloFetchState = () => mapProps(props => ({
   ...props,
   fetchState: {
     initialLoading: initialLoading(props.data.networkStatus),
@@ -49,7 +46,7 @@ export const withApolloFetchState = <Props: {}>():HOC<Props, FetchState & Props>
   },
 }))
 
-export const withApolloFetchActions = <Props: {}>(): HOC<Props, FetchActions & Props> => mapProps(props => ({
+export const withApolloFetchActions = () => mapProps(props => ({
   ...props,
   fetchActions: {
     refetch: props.data.refetch,
@@ -57,21 +54,11 @@ export const withApolloFetchActions = <Props: {}>(): HOC<Props, FetchActions & P
   },
 }))
 
-type ComponentMap<Props> = {
-  LoadingComponent: React.ComponentType<Props>,
-  PlaceholderComponent: React.ComponentType<Props>,
-  ErrorComponent: React.ComponentType<Props>
-}
-
-type BranchFunctions = {
-  isEmpty: (props: any) => boolean
-}
-
 const defaultBranchFunctions = {
   isEmpty: ({ data }) => !data,
 }
 
-export const enhancedGraphql = <Props: {}>(query: any, config: OperationOption<*, *>, componentMap: ComponentMap<Props & FetchState & FetchActions>, branchFunctions: BranchFunctions): HOC<Props, Props & FetchState & FetchActions> => compose(
+export const enhancedGraphql = (query: any, config, componentMap, branchFunctions) => compose(
   graphql(query, config),
   withApolloFetchState(),
   withApolloFetchActions(),
