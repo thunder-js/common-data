@@ -1,11 +1,9 @@
 import React from 'react'
 import { ComponentType } from 'react';
-import { graphql, OperationOption, OptionProps } from 'react-apollo'
-import { withProps, compose, InferableComponentEnhancerWithProps, ComponentEnhancer } from 'recompose'
-import { QueryProps } from 'react-apollo'
+import { withProps, InferableComponentEnhancerWithProps } from 'recompose'
 import { ApolloQueryResult, FetchMoreOptions, FetchMoreQueryOptions } from 'apollo-client';
-import { OperationVariables, ChildProps, ComponentDecorator } from 'react-apollo/types'
-import { DocumentNode } from 'graphql';
+import { OperationVariables } from 'react-apollo/types'
+import { QueryProps } from 'react-apollo'
 
 export interface IFetchState {
   fetchState: {
