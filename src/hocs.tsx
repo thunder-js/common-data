@@ -28,13 +28,13 @@ const fetchingMore = (networkStatus: number): boolean => networkStatus === 3;
 
 export type RC<Props> = React.ComponentClass<Props> | React.StatelessComponent<Props>
 
-export function withLoading <P>(isLoading: (props: P) => boolean, LoadingComponent: RC<P>) {
+export function withLoading <P>(isLoading: (props: P) => boolean, LoadingComponent: RC<any>) {
   return (WrappedComponent: RC<P>) => class extends React.Component<P, {}> {
     public render() {
       const loading: boolean = isLoading(this.props)
       if (loading) {
         return (
-          <LoadingComponent {...this.props} />
+          <LoadingComponent />
         )
       }
       return (
